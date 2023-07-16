@@ -7,9 +7,16 @@ namespace CommaderGQL.GraphQL
     public class Query
     {
 
-        public IQueryable<Platform> GetPlatform([Service] AppDbContext context, int? id)
+        [UseDbContext(typeof(AppDbContext))]
+        public IQueryable<Platform> GetPlatform([ScopedService] AppDbContext context)
         {
-            return context.Platforms.Where(x => x.Id == id.Value);
+            return context.Platforms;
+        }
+
+        [UseDbContext(typeof(AppDbContext))]
+        public IQueryable<Command> GetCommand([ScopedService] AppDbContext context)
+        {
+            return context.Commands;
         }
     }
 }
